@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Main = () => {
   const API_URI = process.env.REACT_APP_API_URI;
+  const navigate = useNavigate();
 
   const [inputValue, setInputValue] = useState({ email: "", password: "" });
 
@@ -51,8 +53,9 @@ const Main = () => {
       .then((data) => {
         console.log(data);
 
-        if (data.token) {
+        if (data.access_token) {
           localStorage.setItem("TOKEN", data.access_token);
+          navigate(`/todo`);
         }
       });
   };
