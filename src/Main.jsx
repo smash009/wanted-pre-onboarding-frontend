@@ -17,6 +17,23 @@ const Main = () => {
 
   const isButtonActive = !(isEmailValid && isPasswordValid);
 
+  const handleSignup = (e) => {
+    e.preventDefault();
+
+    fetch("https://pre-onboarding-selection-task.shop/auth/signup/", {
+      method: "post",
+      headers: { "content-Type": "application/json;charset=utf-8" },
+      body: JSON.stringify({
+        email: inputValue.email,
+        password: inputValue.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   return (
     <>
       <div>
@@ -35,7 +52,10 @@ const Main = () => {
               placeholder="Password"
               onChange={handleInput}
             />
-            <button disabled={isButtonActive}>제출</button>
+            <button disabled={isButtonActive} onClick={handleSignup}>
+              제출
+            </button>
+            <button disabled={isButtonActive}>로그인</button>
           </form>
         </div>
       </div>
