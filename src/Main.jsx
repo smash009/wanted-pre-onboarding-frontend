@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const Main = () => {
+  const API_URI = process.env.REACT_APP_API_URI;
+
   const [inputValue, setInputValue] = useState({ email: "", password: "" });
 
   const handleInput = (e) => {
@@ -20,7 +22,7 @@ const Main = () => {
   const handleSignup = (e) => {
     e.preventDefault();
 
-    fetch("https://pre-onboarding-selection-task.shop/auth/signup/", {
+    fetch(`${API_URI}auth/signup/`, {
       method: "post",
       headers: { "content-Type": "application/json;charset=utf-8" },
       body: JSON.stringify({
@@ -31,6 +33,27 @@ const Main = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+      });
+  };
+
+  const handleSignin = (e) => {
+    e.preventDefault();
+
+    fetch(`${API_URI}auth/signin/`, {
+      method: "post",
+      headers: { "content-Type": "application/json;charset=utf-8" },
+      body: JSON.stringify({
+        email: inputValue.email,
+        password: inputValue.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+
+        if (data.token) {
+          localStorage.setItem("TOKEN", data.access_token);
+        }
       });
   };
 
@@ -53,9 +76,11 @@ const Main = () => {
               onChange={handleInput}
             />
             <button disabled={isButtonActive} onClick={handleSignup}>
-              제출
+              회원가입
             </button>
-            <button disabled={isButtonActive}>로그인</button>
+            <button disabled={isButtonActive} onClick={handleSignin}>
+              로그인
+            </button>
           </form>
         </div>
       </div>
