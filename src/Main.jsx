@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const Main = () => {
@@ -9,6 +9,13 @@ const Main = () => {
     setInputValue({ ...inputValue, [name]: value });
     // console.log(inputValue.email);
   };
+
+  const isEmailValid =
+    inputValue.email.includes("@") && inputValue.email.includes(".");
+
+  const isPasswordValid = inputValue.password.length >= 9;
+
+  const isButtonActive = !(isEmailValid && isPasswordValid);
 
   return (
     <>
@@ -28,7 +35,7 @@ const Main = () => {
               placeholder="Password"
               onChange={handleInput}
             />
-            <button>제출</button>
+            <button disabled={isButtonActive}>제출</button>
           </form>
         </div>
       </div>
