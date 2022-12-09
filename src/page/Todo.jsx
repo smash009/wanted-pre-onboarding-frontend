@@ -11,6 +11,7 @@ const Todos = () => {
   // myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
   const [todoInputContent, setTodoInputContent] = useState("");
+  const [todoUpdateContent, setTodoUpdateContent] = useState("");
   const [todoList, setTodoList] = useState([]);
 
   useEffect(() => {
@@ -33,6 +34,11 @@ const Todos = () => {
 
   const handleInput = (e) => {
     setTodoInputContent(e.target.value);
+    // console.log(todoContent);
+  };
+
+  const handleUpdateInput = (e) => {
+    setTodoUpdateContent(e.target.value);
     // console.log(todoContent);
   };
 
@@ -69,6 +75,29 @@ const Todos = () => {
     });
   };
 
+  const updateTodo = (e) => {
+    e.preventDefault();
+
+    let id = e.target.dataset.index;
+    console.log(id);
+
+    fetch(`${API_URI}todos/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        todo: todoUpdateContent,
+        isCompleted: true,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   return (
     <>
       <div>
@@ -90,8 +119,21 @@ const Todos = () => {
                 </div>
                 <div>
                   <span>{list.todo}</span>
+                  <span>
+                    <input
+                      defaultValue={list.todo}
+                      onChange={handleUpdateInput}
+                    />
+                  </span>
                 </div>
                 <div>
+                  <button
+                    type="submit"
+                    data-index={list.id}
+                    onClick={updateTodo}
+                  >
+                    수정
+                  </button>
                   <button
                     type="submit"
                     data-index={list.id}
