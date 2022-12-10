@@ -17,6 +17,7 @@ const Todos = () => {
   useEffect(() => {
     if (accessToken) {
       navigate(`/todo`);
+      fetchingApi();
     } else {
       navigate(`/`);
     }
@@ -32,8 +33,6 @@ const Todos = () => {
     //     setTodoList([...data].map((list) => ({ ...list, modify: false })));
     //     console.log(todoList);
     //   });
-
-    fetchingApi();
   }, []);
 
   const fetchingApi = () => {
@@ -118,7 +117,7 @@ const Todos = () => {
   };
 
   const toggleUpdateInputBox = (e) => {
-    console.log("showUpdateInputBox", e);
+    // console.log("showUpdateInputBox", e);
 
     setTodoList((todos) =>
       todos.map((todo) => (todo.id === e.id ? { ...todo, modify: true } : todo))
@@ -126,13 +125,15 @@ const Todos = () => {
   };
 
   const cancelUpdateTodo = (e) => {
-    console.log("cancelUpdateTodo", e);
+    // console.log("cancelUpdateTodo", e);
 
     setTodoList((todos) =>
       todos.map((todo) =>
         todo.id === e.id ? { ...todo, modify: false } : todo
       )
     );
+
+    fetchingApi();
   };
 
   return (
