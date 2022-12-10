@@ -28,23 +28,6 @@ const Login = () => {
 
   const isButtonActive = !(isEmailValid && isPasswordValid);
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-
-    fetch(`${API_URI}auth/signup/`, {
-      method: "post",
-      headers: { "content-Type": "application/json;charset=utf-8" },
-      body: JSON.stringify({
-        email: inputValue.email,
-        password: inputValue.password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
-  };
-
   const handleSignin = (e) => {
     e.preventDefault();
 
@@ -58,11 +41,34 @@ const Login = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        if (data.statusCode === 404) {
+          alert("회원 가입을 해주세요.");
+        } else if (data.statusCode === 401) {
+          alert("비밀번호를 확인해 해주세요.");
+        }
 
         if (data.access_token) {
           localStorage.setItem("TOKEN", data.access_token);
           navigate(`/todo`);
+        }
+      });
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+
+    fetch(`${API_URI}auth/signup/`, {
+      method: "post",
+      headers: { "content-Type": "application/json;charset=utf-8" },
+      body: JSON.stringify({
+        email: inputValue.email,
+        password: inputValue.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.statusCode === 400) {
+          alert("회원 가입된 이메일 입니다.");
         }
       });
   };
@@ -87,12 +93,12 @@ const Login = () => {
                 onChange={handleInput}
               />
               <ButtonWrap>
-                <SignupButton disabled={isButtonActive} onClick={handleSignup}>
-                  회원가입
-                </SignupButton>
                 <SigninButton disabled={isButtonActive} onClick={handleSignin}>
                   로그인
                 </SigninButton>
+                <SignupButton disabled={isButtonActive} onClick={handleSignup}>
+                  회원가입
+                </SignupButton>
               </ButtonWrap>
             </LoginForm>
           </LoginFormWrap>
@@ -160,6 +166,20 @@ const ButtonWrap = styled.div`
   text-align: center;
 `;
 
+const SigninButton = styled.button`
+  width: 32%;
+  margin: 10px;
+  padding: 16px 20px;
+  font-size: 19px;
+  font-weight: bold;
+  color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: ${(props) => (props.disabled ? "#aaa" : "#0ea915")};
+  cursor: ${(props) => (props.disabled ? "drfault" : "pointer")};
+  transition: 0.3s;
+`;
+
 const SignupButton = styled.button`
   width: 32%;
   margin: 10px;
@@ -171,19 +191,12 @@ const SignupButton = styled.button`
   border-radius: 3px;
   background-color: #aaa;
   cursor: pointer;
-`;
+  transition: 0.3s;
 
-const SigninButton = styled.button`
-  width: 32%;
-  margin: 10px;
-  padding: 16px 20px;
-  font-size: 19px;
-  font-weight: bold;
-  color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  background-color: #aaa;
-  cursor: pointer;
+  &:hover {
+    background-color: #0ea915;
+    transition: 0.3s;
+  }
 `;
 
 export default Login;

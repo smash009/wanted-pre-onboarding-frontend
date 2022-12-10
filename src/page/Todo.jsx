@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { ImPlus } from "react-icons/im";
 
 const Todos = () => {
   const API_URI = process.env.REACT_APP_API_URI;
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("TOKEN");
-
-  // let myHeaders = new Headers();
-  // myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
   const [todoInputContent, setTodoInputContent] = useState("");
   const [todoUpdateContent, setTodoUpdateContent] = useState("");
   const [todoList, setTodoList] = useState([]);
@@ -21,18 +18,6 @@ const Todos = () => {
     } else {
       navigate(`/`);
     }
-
-    // fetch(`${API_URI}todos`, {
-    //   method: "GET",
-    //   headers: { Authorization: `Bearer ${accessToken}` },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     //setTodoList(data);
-    //     setTodoList([...data].map((list) => ({ ...list, modify: false })));
-    //     console.log(todoList);
-    //   });
   }, []);
 
   const fetchingApi = () => {
@@ -48,31 +33,33 @@ const Todos = () => {
 
   const handleInput = (e) => {
     setTodoInputContent(e.target.value);
-    // console.log(todoContent);
   };
 
   const handleUpdateInput = (e) => {
     setTodoUpdateContent(e.target.value);
-    // console.log(todoContent);
   };
 
   const createTodo = (e) => {
     e.preventDefault();
 
-    fetch(`${API_URI}todos`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        todo: todoInputContent,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        fetchingApi();
-      });
+    if (todoInputContent.length > 0) {
+      fetch(`${API_URI}todos`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          todo: todoInputContent,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          fetchingApi();
+        });
+    } else {
+      alert("한글자 이상 입력해주세요.");
+    }
 
     setTodoInputContent("");
   };
@@ -89,7 +76,6 @@ const Todos = () => {
 
   const deleteTodo = (e) => {
     let id = e.target.dataset.index;
-    console.log(id);
 
     fetch(`${API_URI}todos/${id}`, {
       method: "DELETE",
@@ -107,42 +93,41 @@ const Todos = () => {
     e.preventDefault();
 
     let id = e.target.dataset.index;
-    console.log(id);
 
-    fetch(`${API_URI}todos/${id}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        todo: todoUpdateContent,
-        isCompleted: false,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        fetchingApi();
-      });
+    if (todoUpdateContent.length > 0) {
+      fetch(`${API_URI}todos/${id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          todo: todoUpdateContent,
+          isCompleted: false,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          fetchingApi();
+        });
+    } else {
+      alert("한글자 이상 입력해 주세요.");
+    }
   };
 
   const toggleUpdateInputBox = (e) => {
-    // console.log("showUpdateInputBox", e);
-
     setTodoList((todos) =>
       todos.map((todo) => (todo.id === e.id ? { ...todo, modify: true } : todo))
     );
   };
 
   const cancelUpdateTodo = (e) => {
-    // console.log("cancelUpdateTodo", e);
-
     setTodoList((todos) =>
       todos.map((todo) =>
         todo.id === e.id ? { ...todo, modify: false } : todo
       )
     );
-
+    setTodoUpdateContent(todoList.todo);
     fetchingApi();
   };
 
@@ -150,16 +135,16 @@ const Todos = () => {
     <>
       <div>
         <Titlewrap>
-          <Title>Todo List</Title>
+          <Title>To Do List</Title>
         </Titlewrap>
         <Form>
           <TodoInput
             value={todoInputContent}
-            placeholder="할일 입력"
+            placeholder="할 일을 입력하세요."
             onChange={handleInput}
           />
           <TodoInputButton type="submit" onClick={createTodo}>
-            입력
+            <ImPlus />
           </TodoInputButton>
         </Form>
         <ItemListWrap>
@@ -205,7 +190,7 @@ const Todos = () => {
                     onChange={handleUpdateInput}
                   />
                   <SubmitButton data-index={list.id} onClick={updateTodo}>
-                    제출
+                    완료
                   </SubmitButton>
                   <CancelButton data-index={list.id} onClick={cancelUpdateTodo}>
                     취소
@@ -256,7 +241,7 @@ const TodoInput = styled.input`
 
 const TodoInputButton = styled.button`
   all: unset;
-  padding: 12px 10px;
+  padding: 10.5px 10px;
   border: 1px solid #aaa;
   background-color: #2690f9;
   box-sizing: border-box;
@@ -311,7 +296,6 @@ const UpdateButton = styled.span`
   padding: 10px;
   box-sizing: border-box;
   cursor: pointer;
-  background-color: red;
 `;
 
 const DeleteButton = styled.button`
@@ -320,7 +304,6 @@ const DeleteButton = styled.button`
   box-sizing: border-box;
   padding: 10px;
   cursor: pointer;
-  background-color: green;
 `;
 
 const TodoListItem = styled.div`
@@ -337,13 +320,14 @@ const UpdateInputBox = styled.div`
 
 const UpdateInput = styled.input`
   display: inline-block;
-  width: 312px;
+  width: 307px;
+  margin-right: 5px;
   padding: 0 10px;
   font-size: 17px;
-  line-height: 1.15;
+  line-height: 2.4;
   border: 0;
   box-sizing: border-box;
-  background-color: #fefefe;
+  background-color: #eaeaea;
 `;
 
 const SubmitButton = styled.button`
@@ -352,7 +336,6 @@ const SubmitButton = styled.button`
   box-sizing: border-box;
   padding: 10px;
   cursor: pointer;
-  background-color: green;
 `;
 
 const CancelButton = styled.button`
@@ -361,7 +344,6 @@ const CancelButton = styled.button`
   box-sizing: border-box;
   padding: 10px;
   cursor: pointer;
-  background-color: green;
 `;
 
 export default Todos;
