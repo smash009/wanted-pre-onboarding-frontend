@@ -18,7 +18,6 @@ const Login = () => {
   const handleInput = (e) => {
     const { name, value } = e.target;
     setInputValue({ ...inputValue, [name]: value });
-    // console.log(inputValue.email);
   };
 
   const isEmailValid =
