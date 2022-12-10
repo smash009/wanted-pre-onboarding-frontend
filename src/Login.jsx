@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Main = () => {
+const Login = () => {
   const API_URI = process.env.REACT_APP_API_URI;
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("TOKEN");
@@ -69,33 +69,121 @@ const Main = () => {
 
   return (
     <>
-      <div>
-        <div>
-          <h1>로그인 / 회원가입</h1>
-          <form>
-            <input
-              type="text"
-              name="email"
-              placeholder="E-Mail"
-              onChange={handleInput}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleInput}
-            />
-            <button disabled={isButtonActive} onClick={handleSignup}>
-              회원가입
-            </button>
-            <button disabled={isButtonActive} onClick={handleSignin}>
-              로그인
-            </button>
-          </form>
-        </div>
-      </div>
+      <LoginSection>
+        <LoginBox>
+          <Title>로그인 / 회원가입</Title>
+          <LoginFormWrap>
+            <LoginForm>
+              <EmailInput
+                type="text"
+                name="email"
+                placeholder="E-Mail"
+                onChange={handleInput}
+              />
+              <PasswordInput
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleInput}
+              />
+              <ButtonWrap>
+                <SignupButton disabled={isButtonActive} onClick={handleSignup}>
+                  회원가입
+                </SignupButton>
+                <SigninButton disabled={isButtonActive} onClick={handleSignin}>
+                  로그인
+                </SigninButton>
+              </ButtonWrap>
+            </LoginForm>
+          </LoginFormWrap>
+        </LoginBox>
+      </LoginSection>
     </>
   );
 };
 
-export default Main;
+const LoginSection = styled.section`
+  width: 100%;
+`;
+
+const LoginBox = styled.div`
+  width: 600px;
+  margin: 400px auto;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  background-color: #fafafa;
+`;
+
+const Title = styled.h1`
+  width: 600px;
+  margin: 100px auto 50px;
+  font-size: 41px;
+  text-align: center;
+`;
+
+const LoginFormWrap = styled.form`
+  width: 500px;
+  margin: 80px auto;
+  box-sizing: border-box;
+`;
+
+const LoginForm = styled.form`
+  width: 500px;
+`;
+
+const EmailInput = styled.input`
+  display: block;
+  width: 344px;
+  margin: 10px auto 30px;
+  padding: 0px 20px;
+  font-size: 17px;
+  border: 1px solid #333;
+  border-radius: 3px;
+  box-sizing: border-box;
+  line-height: 2.6;
+`;
+
+const PasswordInput = styled.input`
+  display: block;
+  width: 344px;
+  margin: 30px auto 20px;
+  padding: 0px 20px;
+  font-size: 17px;
+  border: 1px solid #333;
+  border-radius: 3px;
+  box-sizing: border-box;
+  line-height: 2.6;
+`;
+
+const ButtonWrap = styled.div`
+  margin: 0 auto;
+  text-align: center;
+`;
+
+const SignupButton = styled.button`
+  width: 32%;
+  margin: 10px;
+  padding: 16px 20px;
+  font-size: 19px;
+  font-weight: bold;
+  color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: #aaa;
+  cursor: pointer;
+`;
+
+const SigninButton = styled.button`
+  width: 32%;
+  margin: 10px;
+  padding: 16px 20px;
+  font-size: 19px;
+  font-weight: bold;
+  color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: #aaa;
+  cursor: pointer;
+`;
+
+export default Login;

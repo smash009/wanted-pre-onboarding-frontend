@@ -207,8 +207,9 @@ const Titlewrap = styled.div`
 `;
 
 const Title = styled.h1`
+  margin: 100px auto 70px;
+  font-size: 51px;
   text-align: center;
-  margin: 50px auto 30px;
 `;
 
 const Form = styled.form`
