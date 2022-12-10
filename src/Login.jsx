@@ -113,7 +113,7 @@ const LoginSection = styled.section`
 
 const LoginBox = styled.div`
   width: 600px;
-  margin: 400px auto;
+  margin: 200px auto;
   border: 1px solid #bbb;
   border-radius: 5px;
   background-color: #fafafa;
