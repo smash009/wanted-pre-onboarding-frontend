@@ -11,7 +11,7 @@ npm install
 npm start
 
 데모 영상 대신 배포를 하였습니다.
-(https://vercel.com/smash009/wanted-pre-onboarding-frontend)
+(https://wanted-pre-onboarding-frontend-theta.vercel.app/todo)
 
 이 레파지토리는 원티드 프리온보딩 프론트엔드 과정 선발 과제 안내 및 과제 간 사용하기 위한 API를 제공하기 위해 만들어졌습니다.
 
