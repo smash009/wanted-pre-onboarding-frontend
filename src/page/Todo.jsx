@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import TodoInputWrap from "./components/TodoInputWrap";
 import ItemList from "./components/ItemList";
 import styled from "styled-components";
-// import { ImPlus } from "react-icons/im";
+import { GrLogout } from "react-icons/gr";
 
 const Todos = () => {
   const API_URI = process.env.REACT_APP_API_URI;
@@ -142,12 +142,26 @@ const Todos = () => {
     fetchingApi();
   };
 
+  const logout = () => {
+    localStorage.removeItem("TOKEN");
+    navigate(`/`);
+  };
+
   return (
     <>
-      <div>
+      <TodoSection>
         <Titlewrap>
           <Title>To Do List</Title>
         </Titlewrap>
+        <LogoutBox>
+          <LogoutButton>
+            <GrLogout
+              onClick={logout}
+              style={{ fontSize: "27px" }}
+              title="로그아웃"
+            />
+          </LogoutButton>
+        </LogoutBox>
         <TodoInputWrap
           setTodoInputContent={setTodoInputContent}
           todoInputContent={todoInputContent}
@@ -164,10 +178,25 @@ const Todos = () => {
           cancelUpdateTodo={cancelUpdateTodo}
           deleteTodo={deleteTodo}
         />
-      </div>
+      </TodoSection>
     </>
   );
 };
+
+const TodoSection = styled.section`
+  width: 100%;
+`;
+
+const LogoutBox = styled.div`
+  width: 522px;
+  margin: 0 auto;
+  text-align: right;
+`;
+
+const LogoutButton = styled.button`
+  all: unset;
+  display: inline-block;
+`;
 
 const Titlewrap = styled.div`
   width: 500px;
