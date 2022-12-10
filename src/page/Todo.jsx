@@ -77,6 +77,16 @@ const Todos = () => {
     setTodoInputContent("");
   };
 
+  const handleCheckedList = (e) => {
+    setTodoList((todos) =>
+      todos.map((todo) =>
+        todo.id === e.target.dataset.index * 1 && e.target.checked
+          ? { ...todo, isCompleted: true }
+          : { ...todo, isCompleted: false }
+      )
+    );
+  };
+
   const deleteTodo = (e) => {
     let id = e.target.dataset.index;
     console.log(id);
@@ -157,14 +167,26 @@ const Todos = () => {
             {todoList?.map((list) => (
               <ItemLi data-index={list.id} key={list.id}>
                 <CheckBoxWrap>
-                  <input type="checkbox" />
+                  <input
+                    data-index={list.id}
+                    type="checkbox"
+                    onChange={handleCheckedList}
+                  />
                 </CheckBoxWrap>
                 <TodoListItem
                   data-index={list.id}
                   todoList={todoList}
                   style={{ display: list.modify ? "none" : "inline-block" }}
                 >
-                  <Task>{list.todo}</Task>
+                  <Task
+                    style={{
+                      textDecoration: list.isCompleted
+                        ? "line-through"
+                        : "none",
+                    }}
+                  >
+                    {list.todo}
+                  </Task>
                   <UpdateButton
                     data-index={list.id}
                     onClick={() => {
