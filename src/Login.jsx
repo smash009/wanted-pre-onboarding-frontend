@@ -30,7 +30,7 @@ const Login = () => {
   const handleSignin = (e) => {
     e.preventDefault();
 
-    fetch(`${API_URI}auth/signin/`, {
+    fetch(`https://pre-onboarding-selection-task.shop/auth/signin/`, {
       method: "post",
       headers: { "content-Type": "application/json;charset=utf-8" },
       body: JSON.stringify({
@@ -56,7 +56,7 @@ const Login = () => {
   const handleSignup = (e) => {
     e.preventDefault();
 
-    fetch(`${API_URI}auth/signup/`, {
+    fetch(`https://pre-onboarding-selection-task.shop/auth/signup/`, {
       method: "post",
       headers: { "content-Type": "application/json;charset=utf-8" },
       body: JSON.stringify({

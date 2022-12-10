@@ -24,7 +24,7 @@ const Todos = () => {
   }, []);
 
   const fetchingApi = () => {
-    fetch(`${API_URI}todos`, {
+    fetch(`https://pre-onboarding-selection-task.shop/todos`, {
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
     })
@@ -46,7 +46,7 @@ const Todos = () => {
     e.preventDefault();
 
     if (todoInputContent.length > 0) {
-      fetch(`${API_URI}todos`, {
+      fetch(`https://pre-onboarding-selection-task.shop/todos`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -88,7 +88,7 @@ const Todos = () => {
   const deleteTodo = (e) => {
     let id = e.target.dataset.index;
 
-    fetch(`${API_URI}todos/${id}`, {
+    fetch(`https://pre-onboarding-selection-task.shop/todos/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -106,7 +106,7 @@ const Todos = () => {
     let id = e.target.dataset.index;
 
     if (todoUpdateContent) {
-      fetch(`${API_URI}todos/${id}`, {
+      fetch(`https://pre-onboarding-selection-task.shop/todos/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${accessToken}`,
