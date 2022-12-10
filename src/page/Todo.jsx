@@ -87,7 +87,11 @@ const Todos = () => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    });
+    })
+      .then()
+      .then((data) => {
+        fetchingApi();
+      });
   };
 
   const updateTodo = (e) => {
@@ -106,9 +110,11 @@ const Todos = () => {
         todo: todoUpdateContent,
         isCompleted: false,
       }),
-    });
-
-    fetchingApi();
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        fetchingApi();
+      });
   };
 
   const toggleUpdateInputBox = (e) => {
@@ -149,44 +155,42 @@ const Todos = () => {
           <ItemUl>
             {todoList?.map((list) => (
               <ItemLi data-index={list.id} key={list.id}>
-                <div>
+                <CheckBoxWrap>
                   <input type="checkbox" />
-                </div>
+                </CheckBoxWrap>
                 <TodoListItem
                   data-index={list.id}
                   todoList={todoList}
                   style={{ display: list.modify ? "none" : "inline-block" }}
                 >
-                  <span>{list.todo}</span>
-                  <span
+                  <Task>{list.todo}</Task>
+                  <UpdateButton
                     data-index={list.id}
                     onClick={() => {
                       toggleUpdateInputBox(list);
                     }}
                   >
                     수정
-                  </span>
+                  </UpdateButton>
                 </TodoListItem>
                 <UpdateInputBox
                   data-index={list.id}
                   style={{ display: list.modify ? "inline-block" : "none" }}
                 >
-                  <input
+                  <UpdateInput
                     defaultValue={list.todo}
                     onChange={handleUpdateInput}
                   />
-                  <button data-index={list.id} onClick={updateTodo}>
+                  <SubmitButton data-index={list.id} onClick={updateTodo}>
                     제출
-                  </button>
-                  <button data-index={list.id} onClick={cancelUpdateTodo}>
+                  </SubmitButton>
+                  <CancelButton data-index={list.id} onClick={cancelUpdateTodo}>
                     취소
-                  </button>
+                  </CancelButton>
                 </UpdateInputBox>
-                <div>
-                  <button data-index={list.id} onClick={deleteTodo}>
-                    삭제
-                  </button>
-                </div>
+                <DeleteButton data-index={list.id} onClick={deleteTodo}>
+                  삭제
+                </DeleteButton>
               </ItemLi>
             ))}
           </ItemUl>
@@ -247,17 +251,52 @@ const ItemUl = styled.ul`
   padding: 0 10px;
   border: 1px solid #aaa;
   border-top: 0;
+  box-sizing: border-box;
 `;
 
 const ItemLi = styled.li`
+  width: 100%;
+  padding: 10px;
   list-style: none;
   border: 1px solid #eee;
-  width: calc(100% - 20px);
-  padding: 10px;
   background-color: #fefefe;
+  box-sizing: border-box;
+
   &:last-child {
     margin-bottom: 20px;
   }
+`;
+
+const CheckBoxWrap = styled.div`
+  display: inline-block;
+  width: 21px;
+  height: 20px;
+`;
+
+const Task = styled.span`
+  display: inline-block;
+  width: 340px;
+  padding: 0 10px;
+  font-size: 17px;
+  line-height: 2.4;
+  background-color: #fefefe;
+`;
+
+const UpdateButton = styled.span`
+  display: inline-block;
+  padding: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-color: red;
+`;
+
+const DeleteButton = styled.button`
+  all: unset;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 10px;
+  cursor: pointer;
+  background-color: green;
 `;
 
 const TodoListItem = styled.div`
@@ -266,33 +305,39 @@ const TodoListItem = styled.div`
 
 const UpdateInputBox = styled.div`
   display: none;
+  width: 407.5px;
+  padding: 0px;
+  line-height: 1.15;
+  box-sizing: border-box;
+`;
+
+const UpdateInput = styled.input`
+  display: inline-block;
+  width: 312px;
+  padding: 0 10px;
+  font-size: 17px;
+  line-height: 1.15;
+  border: 0;
+  box-sizing: border-box;
+  background-color: #fefefe;
+`;
+
+const SubmitButton = styled.button`
+  all: unset;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 10px;
+  cursor: pointer;
+  background-color: green;
+`;
+
+const CancelButton = styled.button`
+  all: unset;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 10px;
+  cursor: pointer;
+  background-color: green;
 `;
 
 export default Todos;
-
-const RECOMMEND_LIST = [
-  {
-    id: 1,
-    todo: "todo1",
-    isCompleted: true,
-    userId: 1,
-  },
-  {
-    id: 2,
-    todo: "todo2",
-    isCompleted: false,
-    userId: 1,
-  },
-  {
-    id: 3,
-    todo: "todo3",
-    isCompleted: false,
-    userId: 1,
-  },
-  {
-    id: 4,
-    todo: "todo4",
-    isCompleted: false,
-    userId: 1,
-  },
-];
