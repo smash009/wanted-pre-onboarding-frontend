@@ -49,10 +49,12 @@ const Todos = () => {
 
   const handleInput = (e) => {
     setTodoInputContent(e.target.value);
+    // console.log(todoContent);
   };
 
   const handleUpdateInput = (e) => {
     setTodoUpdateContent(e.target.value);
+    // console.log(todoContent);
   };
 
   const createTodo = (e) => {
@@ -67,11 +69,13 @@ const Todos = () => {
       body: JSON.stringify({
         todo: todoInputContent,
       }),
-    });
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   console.log(data);
-    // });
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        fetchingApi();
+      });
+
+    setTodoInputContent("");
   };
 
   const deleteTodo = (e) => {
@@ -103,10 +107,6 @@ const Todos = () => {
         isCompleted: false,
       }),
     });
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   console.log(data);
-    // });
 
     fetchingApi();
   };
@@ -132,17 +132,21 @@ const Todos = () => {
   return (
     <>
       <div>
-        <div>
-          <h1>Todo List</h1>
-        </div>
-        <form>
-          <input placeholder="할일 입력" onChange={handleInput} />
-          <button type="submit" onClick={createTodo}>
+        <Titlewrap>
+          <Title>Todo List</Title>
+        </Titlewrap>
+        <Form>
+          <TodoInput
+            value={todoInputContent}
+            placeholder="할일 입력"
+            onChange={handleInput}
+          />
+          <TodoInputButton type="submit" onClick={createTodo}>
             입력
-          </button>
-        </form>
-        <div>
-          <ul>
+          </TodoInputButton>
+        </Form>
+        <ItemListWrap>
+          <ItemUl>
             {todoList?.map((list) => (
               <ItemLi data-index={list.id} key={list.id}>
                 <div>
@@ -171,40 +175,90 @@ const Todos = () => {
                     defaultValue={list.todo}
                     onChange={handleUpdateInput}
                   />
-                  <button
-                    type="submit"
-                    data-index={list.id}
-                    onClick={updateTodo}
-                  >
+                  <button data-index={list.id} onClick={updateTodo}>
                     제출
                   </button>
-                  <button
-                    type="submit"
-                    data-index={list.id}
-                    onClick={cancelUpdateTodo}
-                  >
+                  <button data-index={list.id} onClick={cancelUpdateTodo}>
                     취소
                   </button>
                 </UpdateInputBox>
                 <div>
-                  <button
-                    type="submit"
-                    data-index={list.id}
-                    onClick={deleteTodo}
-                  >
+                  <button data-index={list.id} onClick={deleteTodo}>
                     삭제
                   </button>
                 </div>
               </ItemLi>
             ))}
-          </ul>
-        </div>
+          </ItemUl>
+        </ItemListWrap>
       </div>
     </>
   );
 };
 
-const ItemLi = styled.li``;
+const Titlewrap = styled.div`
+  width: 500px;
+  margin: 0 auto;
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  margin: 50px auto 30px;
+`;
+
+const Form = styled.form`
+  width: 500px;
+  margin: 20px auto 0;
+  padding: 20px 10px;
+  border: 1px solid #aaa;
+  border-bottom: 0;
+  background-color: #eee;
+`;
+
+const TodoInput = styled.input`
+  width: calc(100% - 50px);
+  margin: 0 auto;
+  padding: 12px 10px 9.5px;
+  font-size: 17px;
+  line-height: 1;
+  border: 1px solid #ddd;
+  border-right: 0;
+  box-sizing: border-box;
+`;
+
+const TodoInputButton = styled.button`
+  all: unset;
+  padding: 12px 10px;
+  border: 1px solid #aaa;
+  background-color: #2690f9;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+`;
+
+const ItemListWrap = styled.div`
+  width: 522px;
+  margin: 0 auto;
+  background-color: #eee;
+`;
+
+const ItemUl = styled.ul`
+  margin: 0px auto 30px;
+  padding: 0 10px;
+  border: 1px solid #aaa;
+  border-top: 0;
+`;
+
+const ItemLi = styled.li`
+  list-style: none;
+  border: 1px solid #eee;
+  width: calc(100% - 20px);
+  padding: 10px;
+  background-color: #fefefe;
+  &:last-child {
+    margin-bottom: 20px;
+  }
+`;
 
 const TodoListItem = styled.div`
   display: inline-block;
