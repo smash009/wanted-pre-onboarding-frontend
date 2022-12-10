@@ -20,6 +20,7 @@ const ItemList = ({
                 data-index={list.id}
                 type="checkbox"
                 onChange={handleCheckedList}
+                checked={list.isCompleted ? true : false}
               />
             </CheckBoxWrap>
             <TodoListItem

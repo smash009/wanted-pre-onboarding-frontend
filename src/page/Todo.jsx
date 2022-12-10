@@ -11,6 +11,7 @@ const Todos = () => {
   const accessToken = localStorage.getItem("TOKEN");
   const [todoInputContent, setTodoInputContent] = useState("");
   const [todoUpdateContent, setTodoUpdateContent] = useState("");
+  const [todoUpdateChecked, setTodoUpdateChecked] = useState(false);
   const [todoList, setTodoList] = useState([]);
 
   useEffect(() => {
@@ -67,14 +68,20 @@ const Todos = () => {
   };
 
   const handleCheckedList = (e) => {
+    let id = e.target.dataset.index;
+
     setTodoList((todos) =>
       todos.map((todo) =>
-        todo.id === e.target.dataset.index * 1 && e.target.checked
+        todo.id === id * 1 && e.target.checked
           ? { ...todo, isCompleted: true }
           : todo.id === e.target.dataset.index * 1 && !e.target.checked
           ? { ...todo, isCompleted: false }
           : { ...todo }
       )
+    );
+
+    setTodoUpdateChecked(
+      e.target.dataset.index && e.target.checked ? true : false
     );
   };
 
@@ -98,7 +105,7 @@ const Todos = () => {
 
     let id = e.target.dataset.index;
 
-    if (todoUpdateContent.length > 0) {
+    if (todoUpdateContent) {
       fetch(`${API_URI}todos/${id}`, {
         method: "PUT",
         headers: {
@@ -107,7 +114,7 @@ const Todos = () => {
         },
         body: JSON.stringify({
           todo: todoUpdateContent,
-          isCompleted: false,
+          isCompleted: todoUpdateChecked,
         }),
       })
         .then((response) => response.json())
@@ -115,7 +122,7 @@ const Todos = () => {
           fetchingApi();
         });
     } else {
-      alert("한글자 이상 입력해 주세요.");
+      alert("내용을 꼭 변경해주세요.");
     }
   };
 
