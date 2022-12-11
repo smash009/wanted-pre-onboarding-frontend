@@ -6,7 +6,8 @@ import styled from "styled-components";
 import { GrLogout } from "react-icons/gr";
 
 const Todos = () => {
-  const API_URI = process.env.REACT_APP_API_URI;
+  // const API_URI = process.env.REACT_APP_API_URI;
+  const API_URI = "https://pre-onboarding-selection-task.shop/";
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("TOKEN");
   const [todoInputContent, setTodoInputContent] = useState("");
@@ -24,7 +25,7 @@ const Todos = () => {
   }, []);
 
   const fetchingApi = () => {
-    fetch(`https://pre-onboarding-selection-task.shop/todos`, {
+    fetch(`${API_URI}todos`, {
       method: "GET",
       headers: { Authorization: `Bearer ${accessToken}` },
     })
@@ -46,7 +47,7 @@ const Todos = () => {
     e.preventDefault();
 
     if (todoInputContent.length > 0) {
-      fetch(`https://pre-onboarding-selection-task.shop/todos`, {
+      fetch(`${API_URI}todos`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -88,7 +89,7 @@ const Todos = () => {
   const deleteTodo = (e) => {
     let id = e.target.dataset.index;
 
-    fetch(`https://pre-onboarding-selection-task.shop/todos/${id}`, {
+    fetch(`${API_URI}todos/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -106,7 +107,7 @@ const Todos = () => {
     let id = e.target.dataset.index;
 
     if (todoUpdateContent) {
-      fetch(`https://pre-onboarding-selection-task.shop/todos/${id}`, {
+      fetch(`${API_URI}todos/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${accessToken}`,

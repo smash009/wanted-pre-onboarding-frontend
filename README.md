@@ -1,6 +1,8 @@
-<h1>원티드 프리온보딩 프론트엔드 - 선발 과제</h1>
+<h1 style="font-size: 31px;">원티드 프리온보딩 프론트엔드 - 선발 과제</h1>
 
-<h2>프로젝트의 실행 방법</h2>
+<br><br>
+
+<h2 style="font-size: 27px;">프로젝트의 실행 방법</h2>
 
 1. 프로젝트 패키지 설치
 
@@ -10,17 +12,25 @@ npm install
 
 npm start
 
+<br><br>
 
-<h2>데모 영상</h2>
+<h2 style="font-size: 27px;">데모 영상</h2>
 
-데모 영상 대신 배포 하였습니다.
-(https://wanted-pre-onboarding-frontend-theta.vercel.app)
+<a href="https://www.youtube.com/watch?v=PsRAzFiN6Cc" target="_blank">바로가기</a>
 
+<br><br>
 
-<h2>사용한 라이브러리</h2>
+<h2 style="font-size: 27px;">배포</h2>
+
+<a href="https://wanted-pre-onboarding-frontend-theta.vercel.app" target="_blank">바로가기</a>
+
+<br><br>
+
+<h2 style="font-size: 27px;">사용한 라이브러리</h2>
 
 React-router-dom, Styled-components, react-icon 등
 
+<br><br><br>
 
 이 레파지토리는 원티드 프리온보딩 프론트엔드 과정 선발 과제 안내 및 과제 간 사용하기 위한 API를 제공하기 위해 만들어졌습니다.
 
@@ -83,7 +93,6 @@ Assignment3
 로그인 여부에 따른 리다이렉트 처리를 구현해주세요
 로컬 스토리지에 토큰이 있는 상태로 / 페이지에 접속한다면 /todo 경로로 리다이렉트 시켜주세요
 로컬 스토리지에 토큰이 없는 상태로 /todo페이지에 접속한다면 / 경로로 리다이렉트 시켜주세요
-
 
 :: 2. 투두 리스트
 

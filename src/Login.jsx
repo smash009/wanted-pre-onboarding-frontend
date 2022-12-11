@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Login = () => {
-  const API_URI = process.env.REACT_APP_API_URI;
+  // const API_URI = process.env.REACT_APP_API_URI;
+  const API_URI = "https://pre-onboarding-selection-task.shop/";
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("TOKEN");
 
@@ -30,7 +31,7 @@ const Login = () => {
   const handleSignin = (e) => {
     e.preventDefault();
 
-    fetch(`https://pre-onboarding-selection-task.shop/auth/signin/`, {
+    fetch(`${API_URI}auth/signin/`, {
       method: "post",
       headers: { "content-Type": "application/json;charset=utf-8" },
       body: JSON.stringify({
@@ -56,7 +57,7 @@ const Login = () => {
   const handleSignup = (e) => {
     e.preventDefault();
 
-    fetch(`https://pre-onboarding-selection-task.shop/auth/signup/`, {
+    fetch(`${API_URI}auth/signup/`, {
       method: "post",
       headers: { "content-Type": "application/json;charset=utf-8" },
       body: JSON.stringify({
