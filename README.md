@@ -6,31 +6,31 @@
 
 1. 프로젝트 패키지 설치
 
-npm install
+&emsp; npm install
 
 2. 프로젝트 실행
 
-npm start
+&emsp; npm start
 
-<br><br>
+<br>
 
 <h2 style="font-size: 27px;">데모 영상</h2>
 
 <a href="https://www.youtube.com/watch?v=PsRAzFiN6Cc" target="_blank">바로가기</a>
 
-<br><br>
+<br>
 
 <h2 style="font-size: 27px;">배포</h2>
 
 <a href="https://wanted-pre-onboarding-frontend-theta.vercel.app" target="_blank">바로가기</a>
 
-<br><br>
+<br>
 
 <h2 style="font-size: 27px;">사용한 라이브러리</h2>
 
 React-router-dom, Styled-components, react-icon 등
 
-<br><br><br>
+<br><br>
 
 이 레파지토리는 원티드 프리온보딩 프론트엔드 과정 선발 과제 안내 및 과제 간 사용하기 위한 API를 제공하기 위해 만들어졌습니다.
 
