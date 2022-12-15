@@ -26,6 +26,12 @@
 
 <br>
 
+<h2 style="font-size: 27px;">에세이</h2>
+
+<a href="https://velog.io/@smash00900/%EC%9B%90%ED%8B%B0%EB%93%9C-%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EC%9D%B8%ED%84%B4%EC%8B%AD-%EC%B0%B8%EA%B0%80-%EC%97%90%EC%84%B8%EC%9D%B4-%EB%82%A8%EC%9E%A5%ED%98%84">바로가기</a>
+
+<br>
+
 <h2 style="font-size: 27px;">사용한 라이브러리</h2>
 
 React-router-dom, Styled-components, react-icon 등
